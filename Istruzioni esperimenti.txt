@@ -1,0 +1,37 @@
+Istruzioni per esperimenti paper
+
+Per generare nuovi file Diffusion d=x n=y eseguire lo script 
+tuck_symmetric_matrices(y,3) se x=3, oppure
+tuck_symmetric_matrices_separable(y,4) se y=4.
+
+Per generare nuovi file Convection d=3 n=y eseguire lo script 
+tuck_nonsymmetric_matrices(y,3) 
+
+Per generare i file Tuck_symm_d3_xxx.dat  e Tuck_symm_d4_xxx.dat
+al variare di xxx tra le varie scelte di poli, lanciare
+lo script tuck_example_symm_d3 e tuck_example_symm_d4 
+rispettivamente.
+
+Per generare i file Tuck_nonsymm_d3_xxx.dat  
+al variare di xxx tra le varie scelte di poli, lanciare
+lo script tuck_example_nonsymm_d3.
+
+Per creare tabelle con iterazioni, tempi e residuo di
+solutore Tucker al variare della scelta dei poli (caso
+non simmetrico), lanciare tuck_table_nonsymm_d3
+
+Per generare i file TT_symm_d6_xxx.dat
+al variare di xxx tra le varie scelte di poli, lanciare
+lo script tt_example_symm_d6.
+
+Per generare i file TT_nonsymm_d5_xxx.dat
+al variare di xxx tra le varie scelte di poli, lanciare
+lo script tt_example_nonsymm_d5.
+
+Per generare la tabella di confronto con amen lanciare
+tt_example_amen.
+
+Per generare la tabella che confronta l'algoritmo TT per 
+vari d grandi, lanciare tt_example_increasing_d
+
+
