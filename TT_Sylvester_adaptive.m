@@ -315,32 +315,27 @@ function [V,K,H,Ap] = Swapped_update_real(A,V,K,H,s, Ap)
 bs = size(H, 1) - size(H, 2);
 param.extend=bs;
 param.real=1;
-
 [V,K,H] = rat_krylov(A,V,K,H,s,param);
 k=size(K,2);
+l=length(s);
 
-for i=length(s):-1:1
-    [G,~]...
-        =qr(K(end-(i-1)*bs-2*bs+1:end-(i-1)*bs,end-(i-1)*bs-bs+1:end-(i-1)*bs));
-    G=G';
-    V(:,end-(i-1)*bs-2*bs+1:end-(i-1)*bs)=V(:,end-(i-1)*bs-2*bs+1:end-(i-1)*bs)*G';
-    K(end-(i-1)*bs-2*bs+1:end-(i-1)*bs,end-(i-1)*bs-2*bs+1:end)...
-        =G*K(end-(i-1)*bs-2*bs+1:end-(i-1)*bs,end-(i-1)*bs-2*bs+1:end);
-    H(end-(i-1)*bs-2*bs+1:end-(i-1)*bs,end-(i-1)*bs-2*bs+1:end)...
-        =G*H(end-(i-1)*bs-2*bs+1:end-(i-1)*bs,end-(i-1)*bs-2*bs+1:end);
+[Q,R]=qr(K(end-(l+1)*bs+1:end,end-l*bs+1:end));
+K(end-(l+1)*bs+1:end,end-l*bs+1:end)=R;
+V(:,end-(l+1)*bs+1:end)=V(:,end-(l+1)*bs+1:end)*Q;
+H(end-(l+1)*bs+1:end,end-(l+1)*bs+1:end)=...
+    Q'*H(end-(l+1)*bs+1:end,end-(l+1)*bs+1:end);
+[Q,~]=qr(H(end:-1:end-(l+1)*bs+1,end-(l+1)*bs+1:end)');
+Q=Q(:,end:-1:1);
+H(:,end-(l+1)*bs+1:end)=H(:,end-(l+1)*bs+1:end)*Q;
+K(1:end-bs,end-(l+1)*bs+1:end)=...
+    K(1:end-bs,end-(l+1)*bs+1:end)*Q;
 
-    [G,~] = qr(H(end-(i-1)*bs-bs+1:end-(i-1)*bs, end-(i-1)*bs-2*bs+1:end-(i-1)*bs).');
-    G=G(:,end:-1:1);
-    H(:, end-(i-1)*bs-2*bs+1:end-(i-1)*bs)=H(:, end-(i-1)*bs-2*bs+1:end-(i-1)*bs)*G;
-    K(:, end-(i-1)*bs-2*bs+1:end-(i-1)*bs)=K(:, end-(i-1)*bs-2*bs+1:end-(i-1)*bs)*G;
-
-    e=zeros(k-(i-1)*bs,bs);
-    e(end-bs+1:end,:)=eye(bs);
-    Ap(1:end+bs,end+1:end+bs)=...
-        H(1:end-(i-1)*bs-bs,1:end-(i-1)*bs)*(K(1:end-(i-1)*bs-bs,1:end-(i-1)*bs)\e);
-    Ap(end-bs+1:end,1:end)=...
-        H(end-(i-1)*bs-2*bs+1:end-(i-1)*bs-bs,1:end-(i-1)*bs)/K(1:end-(i-1)*bs-bs,1:end-(i-1)*bs);
-end
+e=zeros(k,l*bs);
+e(end-l*bs+1:end,:)=eye(l*bs);
+Ap(1:end+l*bs,end+1:end+l*bs)=...
+    H(1:end-bs,1:end)*(K(1:end-bs,1:end)\e);
+Ap(end-l*bs+1:end,1:end)=...
+    H(end-(l+1)*bs+1:end-bs,1:end)/K(1:end-bs,1:end);
 end
 %------------------------------------
 
