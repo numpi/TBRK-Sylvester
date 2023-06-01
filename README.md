@@ -1,5 +1,5 @@
 # TBRK-Sylvester
-Tensor block rational Krylov methods for solving multiterm Sylvester equations
+Tensor block rational Krylov methods for solving tensor Sylvester equations
 
 The algorithms contained in this repository are described in [1].
 
