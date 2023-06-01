@@ -8,8 +8,10 @@ respectively, are needed.
 
 
 [1] Casulli, A., Tensorized block rational Krylov methods for tensor Sylvester equations.
+
 [2] Mario Berljafa, Steven Elsworth, and Stefan Guttel. A rational krylov toolbox for 
     matlab. 2014.
+    
 [3] IV Oseledets et al. TT-Toolbox software; see https://github.com/oseledets.
 
 
